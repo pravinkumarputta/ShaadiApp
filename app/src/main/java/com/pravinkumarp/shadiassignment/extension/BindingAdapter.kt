@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.pravinkumarp.shadiassignment.R
 import com.pravinkumarp.shadiassignment.model.Matches
 import com.pravinkumarp.shadiassignment.ui.invitation.InvitationsAdapter
 
@@ -14,6 +15,19 @@ import com.pravinkumarp.shadiassignment.ui.invitation.InvitationsAdapter
 fun bindUrlImage(view: ImageView, url: String) {
     Glide.with(view)
         .load(url)
+        .circleCrop()
+        .into(view)
+}
+
+@BindingAdapter("bind:loadImageFromInvitation")
+fun bindImageFromInvitation(view: ImageView, invitation: Matches.Invitation) {
+    val placeholderImage = when (invitation.gender) {
+        "female" -> R.drawable.female_placeholder
+        else -> R.drawable.male_placeholder
+    }
+    Glide.with(view)
+        .load(invitation.picture.large)
+        .placeholder(placeholderImage)
         .circleCrop()
         .into(view)
 }
